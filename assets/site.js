@@ -26,7 +26,7 @@ document.querySelectorAll('.cities').forEach((wrap) => {
 });
 
 // Forms (FormSubmit) — contact form goes to the thank-you page
-const FORM_ENDPOINT = 'https://formsubmit.co/ajax/jiem@weareunbthrd.com';
+const FORM_ENDPOINT = 'https://formsubmit.co/ajax/unbthrd.contact@gmail.com';
 document.querySelectorAll('form[data-formsubmit]').forEach((form) => {
   form.addEventListener('submit', async (ev) => {
     ev.preventDefault();
