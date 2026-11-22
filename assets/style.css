@@ -346,3 +346,105 @@ textarea { min-height: 170px; resize: vertical; }
 
 @media (max-width: 960px) { .numbers { grid-template-columns: repeat(2, 1fr); row-gap: 28px; } .notify { grid-template-columns: 1fr; } }
 @media (max-width: 680px) { .legal-page { padding: 50px 16px 70px; } .work-intro { min-height: 0; } }
+
+/* ---------- Events: city drone videos + city filter ---------- */
+.city video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.city .tint { position: absolute; inset: 0; mix-blend-mode: multiply; opacity: .55; transition: opacity .4s; pointer-events: none; }
+.city-brussels { --city: #a3262a; }
+.city-paris { --city: #2747a8; }
+.city-dubai { --city: #8a5a2b; }
+.city .tint { background: var(--city); }
+.city.has-video::after { content: ""; position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,.35), transparent 45%); pointer-events: none; }
+.city .city-name { position: absolute; left: 0; right: 0; top: 50%; transform: translateY(-50%); text-align: center; font-size: clamp(44px, 6vw, 84px); color: var(--cream); z-index: 2; opacity: 0; transition: opacity .4s; pointer-events: none; }
+.city .city-u { position: absolute; left: 50%; bottom: 26px; width: 34px; height: auto; transform: translateX(-50%); z-index: 2; opacity: 0; transition: opacity .4s; pointer-events: none; }
+.city.open .city-name, .city.open .city-u { opacity: 1; }
+.city.has-video.open .label { display: none; }
+.city.has-video:not(.open) .tint { opacity: .75; }
+.in-city { color: var(--muted); }
+.event-list .event-card { order: 0; }
+.event-list .event-card.other-city { order: 1; }
+.see-all-wrap { display: flex; justify-content: center; margin: -50px 0 60px; }
+@media (max-width: 680px) {
+  .city .city-name { font-size: 40px; }
+  .city .city-u { width: 24px; bottom: 16px; }
+}
+.event-card[hidden] { display: none; }
+.city img.city-u { inset: auto auto 26px 50%; width: 34px; height: auto; object-fit: contain; opacity: 0; }
+.city.open img.city-u { opacity: 1; }
+@media (max-width: 680px) { .city img.city-u { width: 24px; bottom: 16px; } }
+@media (max-width: 680px) { .city.has-video:not(.open) .label h3 { display: block; font-size: 28px; } }
+
+/* ---------- Round 2: monuments, city colours, logos ---------- */
+.city img.monument { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 1; }
+.city-brussels img.monument { object-position: 50% 30%; }
+.city-paris img.monument { object-position: 50% 35%; }
+.city-dubai img.monument { object-position: 50% 45%; }
+.in-city[data-city="Brussels"] { color: #a3262a; }
+.in-city[data-city="Paris"] { color: #2747a8; }
+.in-city[data-city="Dubai"] { color: #8a5a2b; }
+.face-top video, .face-top img { object-position: 50% 22%; }
+.logo-title { margin: 0; line-height: 0; }
+.logo-title img { display: block; height: auto; }
+.collage .title .logo-title img { width: clamp(260px, 30vw, 440px); }
+.academy-logo img { width: clamp(200px, 22vw, 300px); }
+.card-logo { margin: 0; line-height: 0; }
+.card-logo img { display: block; width: min(240px, 70%); height: auto; }
+.card-logo.academy img { width: auto; height: 96px; }
+.u-inline { display: inline-flex; align-items: flex-end; gap: .08em; }
+.u-inline img { height: .9em; width: auto; transform: translateY(-.04em); }
+@media (max-width: 680px) {
+  .city.has-video .label h3 { display: none !important; }
+  .city.has-video .city-name { opacity: 1; font-size: 30px; }
+  .city.has-video.open .city-name { font-size: 44px; }
+  .city.has-video:not(.open) .city-u { display: none; }
+  .collage .title .logo-title img { width: 260px; }
+  .card-logo.academy img { height: 80px; }
+}
+
+/* ---------- Round 3: rounded top bar, smaller home logos ---------- */
+:root { --header-h: 90px; }
+.site-header { height: auto; padding: 14px 0 10px; background: transparent; border-bottom: 0; backdrop-filter: none; -webkit-backdrop-filter: none; }
+.site-header .wrap { height: auto; display: block; }
+.site-header .bar { height: 64px; display: flex; align-items: center; justify-content: space-between; padding: 0 28px;
+  background: color-mix(in srgb, var(--cream) 90%, transparent); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--line); border-radius: 18px; box-shadow: 0 6px 24px rgba(25,25,25,.06); }
+.site-header .brand { width: 118px; }
+.card-logo img { width: 130px; }
+.card-logo.academy img { width: auto; height: 62px; }
+.u-inline img { height: .8em; transform: translateY(-.06em); }
+@media (max-width: 680px) {
+  :root { --header-h: 76px; }
+  .site-header { padding: 10px 0 8px; }
+  .site-header .bar { height: 56px; padding: 0 10px 0 18px; border-radius: 16px; position: relative; }
+  .site-header .brand { width: 104px; }
+  .site-header nav { position: absolute; top: calc(100% + 8px); left: 0; right: 0; padding: 6px 18px 10px; border: 1px solid var(--line); border-radius: 16px; background: var(--cream); box-shadow: 0 10px 30px rgba(25,25,25,.12); transform: translateY(-8px); opacity: 0; visibility: hidden; transition: transform .2s, opacity .2s, visibility 0s .2s; z-index: 1; }
+  .site-header nav.open { transform: none; opacity: 1; visibility: visible; transition: transform .2s, opacity .2s; }
+  .site-header nav a:last-child { border-bottom: 0; }
+  .card-logo img { width: 120px; }
+  .card-logo.academy img { height: 56px; }
+}
+
+/* ---------- Round 4 ---------- */
+.card-logo img { width: 112px; }
+.card-logo.academy img { height: 54px; }
+@media (max-width: 680px) {
+  .card-logo img { width: 104px; }
+  .card-logo.academy img { height: 48px; }
+  .collage .title { text-align: center; }
+  .collage .title .logo-title img { margin: 0 auto; }
+  .collage .title p { margin-left: auto; margin-right: auto; }
+  .page-head:has(.academy-logo) { text-align: center; }
+  .academy-logo img { margin: 0 auto; }
+  .page-head:has(.academy-logo) .lead { margin-left: auto; margin-right: auto; }
+  .site-header nav { background: color-mix(in srgb, var(--cream) 86%, transparent); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); }
+}
+@media (max-width: 680px) { .site-header nav { background: color-mix(in srgb, var(--cream) 96%, transparent); backdrop-filter: none; -webkit-backdrop-filter: none; } }
+/* menu sits beside the bar (not inside) so its own frosted blur works */
+.site-header .wrap { position: relative; }
+@media (min-width: 681px) {
+  .site-header nav { position: absolute; top: 0; right: calc(32px + 28px); height: 64px; align-items: center; }
+}
+@media (max-width: 680px) {
+  .site-header nav { top: calc(56px + 8px); left: 16px; right: 16px;
+    background: color-mix(in srgb, var(--cream) 90%, transparent); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); }
+}

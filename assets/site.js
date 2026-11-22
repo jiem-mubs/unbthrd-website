@@ -18,11 +18,46 @@ const io = 'IntersectionObserver' in window ? new IntersectionObserver((es) => e
 }), { rootMargin: '200px' }) : null;
 document.querySelectorAll('video[data-src]').forEach((v) => io ? io.observe(v) : (v.src = v.dataset.src));
 
-// Experience: expanding city panels
+// Events: city panels. The selected city's drone video plays (looping), the others stay paused,
+// and the past events list shows that city first; "See all the cities" pulls down the rest.
 document.querySelectorAll('.cities').forEach((wrap) => {
+  const list = document.querySelector('.event-list[data-filter]');
+  const seeAll = document.querySelector('.see-all');
+  const nameEl = document.querySelector('[data-city-name]');
+  let showAll = false;
+  const filter = (city) => {
+    if (!list) return;
+    list.dataset.filter = city;
+    list.querySelectorAll('.event-card').forEach((card) => {
+      const mine = card.dataset.city === city;
+      card.classList.toggle('other-city', !mine);
+      card.hidden = !mine && !showAll;
+    });
+    if (nameEl) nameEl.textContent = city;
+    const inCity = document.querySelector('.in-city'); if (inCity) inCity.dataset.city = city;
+    if (seeAll) { seeAll.textContent = showAll ? `Only show ${city}` : 'See all the cities'; seeAll.setAttribute('aria-expanded', showAll); }
+  };
+  const select = (c) => {
+    wrap.querySelectorAll('.city').forEach((o) => {
+      const on = o === c;
+      o.classList.toggle('open', on);
+      o.setAttribute('aria-pressed', on);
+      const v = o.querySelector('video');
+      if (!v) return;
+      if (on) { v.preload = 'auto'; v.play().catch(() => {}); } else v.pause();
+    });
+    filter(c.dataset.city);
+  };
   wrap.querySelectorAll('.city').forEach((c) => c.addEventListener('click', () => {
-    wrap.querySelectorAll('.city').forEach((o) => o.classList.toggle('open', o === c));
+    select(c);
   }));
+  if (seeAll) seeAll.addEventListener('click', () => { showAll = !showAll; filter(list.dataset.filter); });
+  const first = wrap.querySelector('.city.open') || wrap.querySelector('.city');
+  if (first) {
+    filter(first.dataset.city);
+    const v = first.querySelector('video');
+    if (v) { const o = new IntersectionObserver((es) => es.forEach((e) => e.isIntersecting && first.classList.contains('open') ? v.play().catch(() => {}) : v.pause())); o.observe(first); }
+  }
 });
 
 // Forms (FormSubmit) — contact form goes to the thank-you page
