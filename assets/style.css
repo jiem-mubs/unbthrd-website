@@ -453,3 +453,8 @@ textarea { min-height: 170px; resize: vertical; }
 .team-head { text-align: center; }
 .team-head .lead { margin-left: auto; margin-right: auto; }
 .uclass-title { display: flex; justify-content: center; }
+
+/* Academy header centred on every screen size */
+.page-head:has(.academy-logo) { text-align: center; }
+.academy-logo img { margin: 0 auto; }
+.page-head:has(.academy-logo) .lead { margin-left: auto; margin-right: auto; }
