@@ -448,3 +448,8 @@ textarea { min-height: 170px; resize: vertical; }
   .site-header nav { top: calc(56px + 8px); left: 16px; right: 16px;
     background: color-mix(in srgb, var(--cream) 90%, transparent); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); }
 }
+
+/* ---------- U Class '26 page title ---------- */
+.team-head { text-align: center; }
+.team-head .lead { margin-left: auto; margin-right: auto; }
+.uclass-title { display: flex; justify-content: center; }
